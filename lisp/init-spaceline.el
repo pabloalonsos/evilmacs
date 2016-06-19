@@ -5,6 +5,7 @@
 (use-package spaceline-config
   :ensure spaceline
   :ensure fancy-battery
+  :ensure flycheck
   :init
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
   (setq spaceline-window-numbers-unicode t)

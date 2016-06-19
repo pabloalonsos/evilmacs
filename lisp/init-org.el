@@ -14,7 +14,7 @@
       (find-file-other-window file)
     (find-file file)))
 
-(defun org-task-capture ()
+(defun org-todo-capture ()
   "Capture a task with my default template."
   (interactive)
   (org-capture nil "t"))
@@ -55,10 +55,10 @@ FORCE-HEADING is non-nil."
 (use-package org
   :ensure t
   :defer t
-  :bind (("C-c o a" . org-agenda)
-	 ("C-c o c" . org-task-capture)
-	 ("C-c o t" . pop-to-org-todo)
-	 ("C-c o n" . pop-to-org-notes))
+  :bind (("C-c a" . org-agenda)
+	 ("C-c c" . org-todo-capture)
+	 ("C-c t" . pop-to-org-todo)
+	 ("C-c n" . pop-to-org-notes))
   :config
   ;; Basic setup
   (setq org-directory "~/BTSync/org")
@@ -75,21 +75,34 @@ FORCE-HEADING is non-nil."
 
   ;; TODO Keywords
   (setq org-todo-keywords
-	'((sequence "☛ TODO(t)"
-		    "○ IN-PROGRESS(p)"
-		    "⚑ WAITING(w)"
-		    "|"
-		    "✓ DONE(d)"
-		    "✗ CANCELED(c)")
+	'((sequence "TODO(t)"
+	 	    "IN-PROGRESS(p)"
+	 	    "WAITING(w)"
+	 	    "|"
+	 	    "DONE(d)"
+	 	    "CANCELED(c)")
+	;; '((sequence "☛ TODO(t)"
+	;; 	    "○ IN-PROGRESS(p)"
+	;; 	    "⚑ WAITING(w)"
+	;; 	    "|"
+	;; 	    "✓ DONE(d)"
+	;; 	    "✗ CANCELED(c)")
 	  (sequence "TO-READ"
 		    "READING"
+		    "|"
 		    "FINISHED")))
 
   (setq org-todo-keyword-faces
-	'(("☛ TODO" . "yellow")
-	  ("○ IN-PROGRESS" . "orange")
-	  ("✓ DONE" . "green")
-	  ("✗ CANCELED" . "red")))
+	'(("TODO" . "blue")
+	  ("IN-PROGRESS" . "yellow")
+	  ("WAITING(w)". "orange")
+	  ("DONE" . "green")
+	  ("CANCELED" . "red")))
+	;; '(("☛ TODO" . "blue")
+	;;   ("○ IN-PROGRESS" . "yellow")
+	;;   ("⚑ WAITING(w)". "orange")
+	;;   ("✓ DONE" . "green")
+	;;   ("✗ CANCELED" . "red")))
   
   (setq org-enforce-todo-dependencies t)
 
@@ -97,10 +110,10 @@ FORCE-HEADING is non-nil."
   (setq org-tag-alist '(
 			;; where
 			(:startgroup)
-			("@home" .    ?h)
-			("@work" .    ?w)
-			("@online" .  ?o)
-			("@errands" . ?e)
+			("@home" .     ?h)
+			("@work" .     ?w)
+			("@out" .      ?o)
+			("@computer" . ?c)
 			(:endgroup)
 
 			;; when
@@ -113,9 +126,8 @@ FORCE-HEADING is non-nil."
 			(:endgroup)
 
 			;; type
-			("mail" .     ?m)
+			("email" .    ?e)
 			("read" .     ?r)
-			("write" .    ?r)
 			("neosavvy" . ?n)
 			("phone" .    ?p)
 			("home" .     ?H)))
@@ -124,7 +136,7 @@ FORCE-HEADING is non-nil."
   (setq org-capture-templates
 	'(("t" "TODO task template." entry
 	   (file "todo.org")
-	   "* ☛ TODO []: %?
+	   "* TODO []: %?
 		      DEADLINE: %t")
 	  ("n" "NOTE template." entry
 	   (file "notes.org")
@@ -132,6 +144,26 @@ FORCE-HEADING is non-nil."
 
   ;; Agenda
   (setq org-agenda-start-on-weekday 1)
+  (setq org-agenda-text-search-extra-files '(agenda-archives))
+  (setq org-agenda-custom-commands
+      '(("g" . "GTD contexts")
+	("gh" "Home" tags-todo "home")
+	("gw" "Work" tags-todo "work")
+        ("go" "Out" tags-todo "out")
+        ("gc" "Computer" tags-todo "computer")
+        ("G" "GTD Block Agenda"
+         ((tags-todo "home")
+          (tags-todo "work")
+          (tags-todo "out")
+          (tags-todo "computer"))
+         nil                      ;; i.e., no local settings
+         ("~/BTSync/org/next-actions.html")))) ;; exports block to this file with C-c a e
+
+  (setq org-agenda-custom-commands
+      '(("p" . "Priorities")
+        ("pa" "A items" tags-todo "+PRIORITY=\"A\"")
+        ("pb" "B items" tags-todo "+PRIORITY=\"B\"")
+        ("pc" "C items" tags-todo "+PRIORITY=\"C\"")))
 
   (evil-leader/set-key-for-mode 'org-mode
     "a" 'org-agenda
@@ -205,6 +237,7 @@ FORCE-HEADING is non-nil."
 (use-package org-bullets
   :ensure t
   :config
+  ;(setq org-bullets-bullet-list '("◉" "◎" "⚫" "○" "►" "◇"))
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 (provide 'init-org)

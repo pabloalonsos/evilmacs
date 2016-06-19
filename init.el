@@ -60,7 +60,6 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-c C-c") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-c C-k") 'compile)
-(global-set-key (kbd "C-x g") 'magit-status)
 
 ; Shell
 (setq shell-file-name "zsh")
@@ -97,7 +96,7 @@
 (require 'init-evil)
 (require 'init-flycheck)
 (require 'init-helm)
-
+(require 'init-elfeed)
 
 ;; Org Prerequisites
 (use-package visual-fill-column
@@ -184,10 +183,24 @@
 
 (use-package magit
   :ensure t
-  :init
-  (add-hook 'magit-mode-hook
-	    (lambda ()
-	      (define-key magit-mode-map (kdb ",o") 'delete-other-windows)))
+  :commands (magit-blame-mode
+	     magit-commit
+	     magit-diff
+	     magit-log
+	     magit-status)
+  :config
+  (global-set-key (kbd "C-x g") 'magit-status)
+  (evil-define-key 'normal magit-mode-map (kbd "gb") 'magit-blame)
+  (evil-define-key 'normal magit-mode-map (kbd "gc") 'magit-commit)
+  (evil-define-key 'normal magit-mode-map (kbd "gd") 'magit-diff)
+  (evil-define-key 'normal magit-mode-map (kbd "gl") 'magit-log)
+  (evil-define-key 'normal magit-mode-map (kbd "gr") 'magit-reflog)
+  (evil-define-key 'normal magit-mode-map (kbd "gs") 'magit-status)
+  (evil-define-key 'normal magit-mode-map (kbd "go") 'delete-other-windows)
+  (define-key magit-mode-map (kbd "j") 'evil-next-visual-line)
+  (define-key magit-mode-map (kbd "k") 'evil-previous-visual-line)
+  (define-key magit-mode-map (kbd "l") 'evil-forward-char)
+  (define-key magit-mode-map (kbd "h") 'evil-backward-char)
   (add-hook 'git-commit-mode-hook 'evil-insert-state))
 
 (use-package undo-tree
@@ -203,13 +216,6 @@
   :ensure t
   :config
   (which-key-mode))
-;;(use-package guide-key
-;;  :ensure t
-;;  :defer t
-;;  :diminish guide-key-mode
-;;  :config
-;;  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
-;;  (guide-key-mode 1))  ; Enable guide-key-mode
 
 ;;;;;;;;;;;;;;;
 ;; Languages ;;
@@ -219,8 +225,8 @@
   :init
   (add-hook 'emmet-mode-hook
 	    (lambda ()
-	      (evil-define-key 'insert emmet-mode-keymap (kdb "C-S-l") 'emmet-next-edit-point)
-	      (evil-define-key 'insert emmet-mode-keymap (kdb "C-S-h") 'emmet-prev-edit-point))))
+	      (evil-define-key 'insert emmet-mode-keymap (kbd "C-S-l") 'emmet-next-edit-point)
+	      (evil-define-key 'insert emmet-mode-keymap (kbd "C-S-h") 'emmet-prev-edit-point))))
 
 (use-package markdown-mode
   :ensure t
@@ -287,6 +293,11 @@
   :config
   (define-key rust-mode-map (kbd "C-c C-f") #'rustfmt-format-buffer))
 
+(use-package elfeed
+  :ensure t
+  :config
+  (global-set-key (kbd "C-x w") 'elfeed))
+
 ;;;;;;;;;;;;;;;;;
 ;; Other Hooks ;;
 ;;;;;;;;;;;;;;;;;
@@ -311,9 +322,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
  '(package-selected-packages
    (quote
-    (fancy-battery spaceline rustfmt json-mode python-mode web-mode flycheck-clojure clojure-mode helm-flx company-flx flx helm-projectile evil-smartparens smartparens helm-smex smex marmalade evil-magit magit wgrep-helm swiper ag exec-path-from-shell company helm-gtags evil-org highlight-symbol flycheck projectile evil-visual-mark-mode powerline-evil evil helm))))
+    (elfeed fancy-battery spaceline rustfmt json-mode python-mode web-mode flycheck-clojure clojure-mode helm-flx company-flx flx helm-projectile evil-smartparens smartparens helm-smex smex marmalade evil-magit magit wgrep-helm swiper ag exec-path-from-shell company helm-gtags evil-org highlight-symbol flycheck projectile evil-visual-mark-mode powerline-evil evil helm))))
 
 
 (custom-set-faces
@@ -321,7 +333,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 120 :family "Meslo LG M for Powerline")))))
+ )
 
 (require 'init-linum)
 (load-theme 'monokai t)
