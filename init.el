@@ -189,18 +189,21 @@
 	     magit-log
 	     magit-status)
   :config
+  (use-package evil-magit
+    :ensure t)
+  (add-to-list 'magit-log-arguments "--no-abbrev-commit")
   (global-set-key (kbd "C-x g") 'magit-status)
-  (evil-define-key 'normal magit-mode-map (kbd "gb") 'magit-blame)
-  (evil-define-key 'normal magit-mode-map (kbd "gc") 'magit-commit)
-  (evil-define-key 'normal magit-mode-map (kbd "gd") 'magit-diff)
-  (evil-define-key 'normal magit-mode-map (kbd "gl") 'magit-log)
-  (evil-define-key 'normal magit-mode-map (kbd "gr") 'magit-reflog)
-  (evil-define-key 'normal magit-mode-map (kbd "gs") 'magit-status)
-  (evil-define-key 'normal magit-mode-map (kbd "go") 'delete-other-windows)
-  (define-key magit-mode-map (kbd "j") 'evil-next-visual-line)
-  (define-key magit-mode-map (kbd "k") 'evil-previous-visual-line)
-  (define-key magit-mode-map (kbd "l") 'evil-forward-char)
-  (define-key magit-mode-map (kbd "h") 'evil-backward-char)
+  ;(evil-define-key 'normal magit-mode-map (kbd "gb") 'magit-blame)
+  ;(evil-define-key 'normal magit-mode-map (kbd "gc") 'magit-commit)
+  ;(evil-define-key 'normal magit-mode-map (kbd "gd") 'magit-diff)
+  ;(evil-define-key 'normal magit-mode-map (kbd "gl") 'magit-log)
+  ;(evil-define-key 'normal magit-mode-map (kbd "gr") 'magit-reflog)
+  ;(evil-define-key 'normal magit-mode-map (kbd "gs") 'magit-status)
+  ;(evil-define-key 'normal magit-mode-map (kbd "go") 'delete-other-windows)
+  ;(define-key magit-mode-map (kbd "j") 'evil-next-visual-line)
+  ;(define-key magit-mode-map (kbd "k") 'evil-previous-visual-line)
+  ;(define-key magit-mode-map (kbd "l") 'evil-forward-char)
+  ;(define-key magit-mode-map (kbd "h") 'evil-backward-char)
   (add-hook 'git-commit-mode-hook 'evil-insert-state))
 
 (use-package undo-tree
