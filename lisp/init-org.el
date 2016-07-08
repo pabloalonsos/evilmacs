@@ -24,8 +24,13 @@
   (interactive "P")
   (pop-to-file "~/BTSync/org/todo.org" split))
 
+(defun pop-to-org-buy (split)
+  "Visit my main BUY list, in the current window or a SPLIT."
+  (interactive "P")
+  (pop-to-file "~/BTSync/org/buy.org" split))
+
 (defun pop-to-org-notes (split)
-  "Visit my main notes file, in the current window or a SPLIT."
+  "Visit my main NOTES file, in the current window or a SPLIT."
   (interactive "P")
   (pop-to-file "~/BTSync/org/notes.org" split))
 
@@ -56,8 +61,9 @@ FORCE-HEADING is non-nil."
   :ensure t
   :defer t
   :bind (("C-c a" . org-agenda)
-	 ("C-c c" . org-todo-capture)
+	 ("C-c c" . org-capture)
 	 ("C-c t" . pop-to-org-todo)
+	 ("C-c b" . pop-to-org-buy)
 	 ("C-c n" . pop-to-org-notes))
   :config
   ;; Basic setup
@@ -90,7 +96,11 @@ FORCE-HEADING is non-nil."
 	  (sequence "TO-READ"
 		    "READING"
 		    "|"
-		    "FINISHED")))
+		    "FINISHED")
+	  (sequence "BUY"
+		    "DELAYED"
+		    "|"
+		    "BOUGHT")))
 
   (setq org-todo-keyword-faces
 	'(("TODO" . "blue")
@@ -129,8 +139,7 @@ FORCE-HEADING is non-nil."
 			("email" .    ?e)
 			("read" .     ?r)
 			("neosavvy" . ?n)
-			("phone" .    ?p)
-			("home" .     ?H)))
+			("phone" .    ?p)))
 
   ;; Capture
   (setq org-capture-templates
@@ -140,7 +149,10 @@ FORCE-HEADING is non-nil."
 		      DEADLINE: %t")
 	  ("n" "NOTE template." entry
 	   (file "notes.org")
-	   "* DATE: %t : %?")))
+	   "* DATE: %t : %?")
+	  ("b" "BUY template." entry
+	   (file "buy.org")
+	   "* BUY [%^{priority|#A|#B|#C}]: %?\n** URL:\n** Price:\n** CREATED: %t")))
 
   ;; Agenda
   (setq org-agenda-start-on-weekday 1)
@@ -151,19 +163,32 @@ FORCE-HEADING is non-nil."
 	("gw" "Work" tags-todo "work")
         ("go" "Out" tags-todo "out")
         ("gc" "Computer" tags-todo "computer")
-        ("G" "GTD Block Agenda"
+	("p" . "Priorities")
+	("pa" "A items" tags-todo "+PRIORITY=\"A\"")
+	("pb" "B items" tags-todo "+PRIORITY=\"B\"")
+	("pc" "C items" tags-todo "+PRIORITY=\"C\"")
+	("G" "GTD @where agenda"
          ((tags-todo "home")
           (tags-todo "work")
           (tags-todo "out")
           (tags-todo "computer"))
-         nil                      ;; i.e., no local settings
-         ("~/BTSync/org/next-actions.html")))) ;; exports block to this file with C-c a e
-
-  (setq org-agenda-custom-commands
-      '(("p" . "Priorities")
-        ("pa" "A items" tags-todo "+PRIORITY=\"A\"")
-        ("pb" "B items" tags-todo "+PRIORITY=\"B\"")
-        ("pc" "C items" tags-todo "+PRIORITY=\"C\"")))
+         nil
+	 ("~/BTSync/org/next-actions.html"))
+	("W" "GTD @when agenda"
+         ((tags-todo "morning")
+          (tags-todo "afternoon")
+          (tags-todo "evening")
+          (tags-todo "night")
+          (tags-todo "weekend"))
+         nil
+	 ("~/BTSync/org/next-actions.html"))
+	("T" "GTD @type agenda"
+         ((tags-todo "email")
+          (tags-todo "read")
+          (tags-todo "neosavvy")
+          (tags-todo "phone"))
+         nil
+	 ("~/BTSync/org/next-actions.html")))) ;; exports block to this file with C-c a e
 
   (evil-leader/set-key-for-mode 'org-mode
     "a" 'org-agenda

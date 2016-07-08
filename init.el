@@ -42,8 +42,8 @@
 (setq column-number-mode t)
 
 ; Indentation
-(setq tab-width 4
-      indent-tabs-mode nil)
+(setq-default tab-width 4
+              indent-tabs-mode nil)
 
 ; Backup files
 (setq backup-directory-alist `(("." . "~/.saves")))
@@ -97,6 +97,7 @@
 (require 'init-flycheck)
 (require 'init-helm)
 (require 'init-elfeed)
+(require 'init-hexo)
 
 ;; Org Prerequisites
 (use-package visual-fill-column
@@ -253,6 +254,7 @@
 		    ac-source-abbrev
 		    ac-source-dictionary
 		    ac-source-words-in-same-mode-buffers))))
+  (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
   (add-hook 'web-mode-hook
 	    (lambda ()
 	      (setq web-mode-style-padding 2)
@@ -296,10 +298,12 @@
   :config
   (define-key rust-mode-map (kbd "C-c C-f") #'rustfmt-format-buffer))
 
-(use-package elfeed
-  :ensure t
-  :config
-  (global-set-key (kbd "C-x w") 'elfeed))
+
+;;;;;;;;;;;;;;;;;;;
+;; Other Modules ;;
+;;;;;;;;;;;;;;;;;;;
+
+
 
 ;;;;;;;;;;;;;;;;;
 ;; Other Hooks ;;
@@ -328,7 +332,10 @@
  '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
  '(package-selected-packages
    (quote
-    (elfeed fancy-battery spaceline rustfmt json-mode python-mode web-mode flycheck-clojure clojure-mode helm-flx company-flx flx helm-projectile evil-smartparens smartparens helm-smex smex marmalade evil-magit magit wgrep-helm swiper ag exec-path-from-shell company helm-gtags evil-org highlight-symbol flycheck projectile evil-visual-mark-mode powerline-evil evil helm))))
+    (hexo elfeed fancy-battery spaceline rustfmt json-mode python-mode web-mode flycheck-clojure clojure-mode helm-flx company-flx flx helm-projectile evil-smartparens smartparens helm-smex smex marmalade evil-magit magit wgrep-helm swiper ag exec-path-from-shell company helm-gtags evil-org highlight-symbol flycheck projectile evil-visual-mark-mode powerline-evil evil helm)))
+ '(tab-stop-list
+   (quote
+    (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))))
 
 
 (custom-set-faces
