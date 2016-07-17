@@ -108,7 +108,10 @@
 ;; Package Configuration (TODO: Move to init-*.el files)
 ;;
 
-(use-package rainbow-mode
+;;(use-package rainbow-mode
+;;  :ensure t)
+
+(use-package rainbow-delimiters
   :ensure t)
 
 (use-package exec-path-from-shell
@@ -170,6 +173,9 @@
   :init
   (add-hook 'clojure-mode-hook 'rainbow-mode)
   (define-key lisp-interaction-mode-map (kbd "<C-return>") 'eval-last-sexp))
+
+(use-package clojure-mode-extra-font-locking
+  :ensure t)
 
 (use-package cider
   :ensure t)
@@ -298,12 +304,15 @@
   :config
   (define-key rust-mode-map (kbd "C-c C-f") #'rustfmt-format-buffer))
 
+(use-package tide
+  :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;
 ;; Other Modules ;;
 ;;;;;;;;;;;;;;;;;;;
 
-
+(use-package writeroom-mode
+  :ensure t)
 
 ;;;;;;;;;;;;;;;;;
 ;; Other Hooks ;;
@@ -332,7 +341,7 @@
  '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
  '(package-selected-packages
    (quote
-    (hexo elfeed fancy-battery spaceline rustfmt json-mode python-mode web-mode flycheck-clojure clojure-mode helm-flx company-flx flx helm-projectile evil-smartparens smartparens helm-smex smex marmalade evil-magit magit wgrep-helm swiper ag exec-path-from-shell company helm-gtags evil-org highlight-symbol flycheck projectile evil-visual-mark-mode powerline-evil evil helm)))
+    (wc-mode tide hexo elfeed fancy-battery spaceline rustfmt json-mode python-mode web-mode flycheck-clojure clojure-mode helm-flx company-flx flx helm-projectile evil-smartparens smartparens helm-smex smex marmalade evil-magit magit wgrep-helm swiper ag exec-path-from-shell company helm-gtags evil-org highlight-symbol flycheck projectile evil-visual-mark-mode powerline-evil evil helm)))
  '(tab-stop-list
    (quote
     (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))))
