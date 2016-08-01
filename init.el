@@ -98,6 +98,7 @@
 (require 'init-helm)
 (require 'init-elfeed)
 (require 'init-hexo)
+(require 'init-search)
 
 ;; Org Prerequisites
 (use-package visual-fill-column
@@ -111,8 +112,8 @@
 ;;(use-package rainbow-mode
 ;;  :ensure t)
 
-(use-package rainbow-delimiters
-  :ensure t)
+;;use-package rainbow-delimiters
+;;  :ensure t)
 
 (use-package exec-path-from-shell
   :ensure t
@@ -120,36 +121,14 @@
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
 
-(use-package smex
-  :ensure t
-  :init
-  (smex-initialize)
-  :config
-  (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
-  (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "M-X") 'smex-major-mode-commands))
-
-(use-package wgrep
-  :ensure t
-  :config
-  (setq wgrep-auto-save-buffer t))
-
-(use-package wgrep-ag
-  :ensure t
-  :commands (wgrep-ag-setup))
-
-(use-package ag
-  :ensure t
-  :config
-  (add-hook 'ag-mode-hook
-            (lambda ()
-              (wgrep-ag-setup)
-              (define-key ag-mode-map (kbd "n") 'evil-search-next)
-              (define-key ag-mode-map (kbd "N") 'evil-search-previous)))
-  (setq ag-executable "/usr/local/bin/ag")
-  (setq ag-highlight-search t)
-  (setq ag-reuse-buffers t)
-  (setq ag-reuse-window t))
+;;(use-package smex
+;;  :ensure t
+;;  :init
+;;  (smex-initialize)
+;;  :config
+;;  (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
+;;  (global-set-key (kbd "M-x") 'smex)
+;;  (global-set-key (kbd "M-X") 'smex-major-mode-commands))
 
 (use-package company
   :ensure t
@@ -168,17 +147,6 @@
   :commands swiper
   :bind ("C-s" . swiper))
 
-(use-package clojure-mode
-  :ensure t
-  :init
-  (add-hook 'clojure-mode-hook 'rainbow-mode)
-  (define-key lisp-interaction-mode-map (kbd "<C-return>") 'eval-last-sexp))
-
-(use-package clojure-mode-extra-font-locking
-  :ensure t)
-
-(use-package cider
-  :ensure t)
 
 (use-package smartparens
   :ensure t
@@ -197,6 +165,8 @@
 	     magit-status)
   :config
   (use-package evil-magit
+    :init
+    (message "Evil Magit!")
     :ensure t)
   (add-to-list 'magit-log-arguments "--no-abbrev-commit")
   (global-set-key (kbd "C-x g") 'magit-status)
@@ -230,6 +200,21 @@
 ;;;;;;;;;;;;;;;
 ;; Languages ;;
 ;;;;;;;;;;;;;;;
+
+;;
+;; Global
+;;
+(use-package mmm-mode
+  :ensure t)
+
+(use-package rainbow-delimiters
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+
+;;
+;; Web (HTML, JS, CSS)
+;;
 (use-package emmet-mode
   :ensure t
   :init
@@ -268,9 +253,15 @@
 	      (flycheck-add-mode 'html-tidy 'web-mode)
 	      (flycheck-mode))))
 
-(use-package mmm-mode
+;;
+;; Typescript
+;;
+(use-package tide
   :ensure t)
 
+;;
+;; Python
+;;
 (use-package python-mode
   :ensure t
   :config
@@ -278,8 +269,14 @@
 	    (lambda ()
 	      (add-to-list 'write-file-functions 'delete-trailing-whitespace))))
 
+;;
+;; Clojure
+;;
+(require 'init-clojure)
 
-;; RUST
+;;
+;; Rust
+;;
 (use-package rust-mode
   :ensure t)
 
@@ -288,10 +285,6 @@
   :defer t
   :init
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-
-(use-package flycheck-package
-  :ensure t
-  :init (with-eval-after-load 'flycheck (flycheck-package-setup)))
 
 (use-package racer
   :ensure t
@@ -304,8 +297,10 @@
   :config
   (define-key rust-mode-map (kbd "C-c C-f") #'rustfmt-format-buffer))
 
-(use-package tide
-  :ensure t)
+
+(use-package flycheck-package
+  :ensure t
+  :init (with-eval-after-load 'flycheck (flycheck-package-setup)))
 
 ;;;;;;;;;;;;;;;;;;;
 ;; Other Modules ;;
@@ -338,6 +333,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("70b5e506efe625e6a9cf71ddd5dbbf35b960229f32637676647bef873485df09" default)))
  '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
  '(package-selected-packages
    (quote
@@ -355,7 +353,11 @@
  )
 
 (require 'init-linum)
-(load-theme 'monokai t)
+
+;;(load-theme 'monokai t)
+(use-package moe-theme
+  :ensure t)
+(load-theme 'moe-dark t)
 
 (provide 'init)
 ;;; init ends here
