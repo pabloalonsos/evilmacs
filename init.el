@@ -40,18 +40,24 @@
 (when (not indicate-empty-lines)
   (toggle-indicate-empty-lines))
 (setq column-number-mode t)
+(global-linum-mode t)
 
 ; Indentation
 (setq-default tab-width 4
               indent-tabs-mode nil)
 
+; Session
+(desktop-save-mode 1)
+
 ; Backup files
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
 (setq delete-old-versions t
-  kept-new-versions 6
-  kept-old-versions 2
-  version-control t)
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
+(setq auto-save-file-name-transforms
+      `((".*" , "~/.auto-saves" t)))
 
 ; Yes and No
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -116,10 +122,10 @@
 ;;  :ensure t)
 
 (use-package exec-path-from-shell
-  :ensure t
-  :config
-  (when (memq window-system '(mac ns))
-    (exec-path-from-shell-initialize)))
+             :ensure t
+             :config
+             (when (memq window-system '(mac ns))
+               (exec-path-from-shell-initialize)))
 
 ;;(use-package smex
 ;;  :ensure t
@@ -131,71 +137,71 @@
 ;;  (global-set-key (kbd "M-X") 'smex-major-mode-commands))
 
 (use-package company
-  :ensure t
-  :init
-  (global-company-mode)
-  :config
-  (setq company-idle-delay 0.2)
-  (setq company-minimum-prefix-length 1)
-  (setq company-selection-wrap-around t)
-  (define-key company-active-map [tab] 'company-complete)
-  (define-key company-active-map (kbd "C-n") 'company-select-next)
-  (define-key company-active-map (kbd "C-p") 'company-select-previous))
+             :ensure t
+             :init
+             (global-company-mode)
+             :config
+             (setq company-idle-delay 0.2)
+             (setq company-minimum-prefix-length 1)
+             (setq company-selection-wrap-around t)
+             (define-key company-active-map [tab] 'company-complete)
+             (define-key company-active-map (kbd "C-n") 'company-select-next)
+             (define-key company-active-map (kbd "C-p") 'company-select-previous))
 
 (use-package swiper
-  :ensure t
-  :commands swiper
-  :bind ("C-s" . swiper))
+             :ensure t
+             :commands swiper
+             :bind ("C-s" . swiper))
 
 
 (use-package smartparens
-  :ensure t
-  :diminish smartparens-mode
-  :config
-  (progn
-    (require 'smartparens-config)
-    (smartparens-global-mode t)))
+             :ensure t
+             :diminish smartparens-mode
+             :config
+             (progn
+               (require 'smartparens-config)
+               (smartparens-global-mode t)))
 
 (use-package magit
-  :ensure t
-  :commands (magit-blame-mode
-	     magit-commit
-	     magit-diff
-	     magit-log
-	     magit-status)
-  :config
-  (use-package evil-magit
-    :init
-    (message "Evil Magit!")
-    :ensure t)
-  (add-to-list 'magit-log-arguments "--no-abbrev-commit")
-  (global-set-key (kbd "C-x g") 'magit-status)
-  ;(evil-define-key 'normal magit-mode-map (kbd "gb") 'magit-blame)
-  ;(evil-define-key 'normal magit-mode-map (kbd "gc") 'magit-commit)
-  ;(evil-define-key 'normal magit-mode-map (kbd "gd") 'magit-diff)
-  ;(evil-define-key 'normal magit-mode-map (kbd "gl") 'magit-log)
-  ;(evil-define-key 'normal magit-mode-map (kbd "gr") 'magit-reflog)
-  ;(evil-define-key 'normal magit-mode-map (kbd "gs") 'magit-status)
-  ;(evil-define-key 'normal magit-mode-map (kbd "go") 'delete-other-windows)
-  ;(define-key magit-mode-map (kbd "j") 'evil-next-visual-line)
-  ;(define-key magit-mode-map (kbd "k") 'evil-previous-visual-line)
-  ;(define-key magit-mode-map (kbd "l") 'evil-forward-char)
-  ;(define-key magit-mode-map (kbd "h") 'evil-backward-char)
-  (add-hook 'git-commit-mode-hook 'evil-insert-state))
+             :ensure t
+             :commands (magit-blame-mode
+                         magit-commit
+                         magit-diff
+                         magit-log
+                         magit-status)
+             :config
+             (use-package evil-magit
+                          :init
+                          (message "Evil Magit!")
+                          :ensure t)
+             (add-to-list 'magit-log-arguments "--no-abbrev-commit")
+             (global-set-key (kbd "C-x g") 'magit-status)
+             ;(evil-define-key 'normal magit-mode-map (kbd "gb") 'magit-blame)
+             ;(evil-define-key 'normal magit-mode-map (kbd "gc") 'magit-commit)
+             ;(evil-define-key 'normal magit-mode-map (kbd "gd") 'magit-diff)
+             ;(evil-define-key 'normal magit-mode-map (kbd "gl") 'magit-log)
+             ;(evil-define-key 'normal magit-mode-map (kbd "gr") 'magit-reflog)
+             ;(evil-define-key 'normal magit-mode-map (kbd "gs") 'magit-status)
+             ;(evil-define-key 'normal magit-mode-map (kbd "go") 'delete-other-windows)
+             ;(define-key magit-mode-map (kbd "j") 'evil-next-visual-line)
+             ;(define-key magit-mode-map (kbd "k") 'evil-previous-visual-line)
+             ;(define-key magit-mode-map (kbd "l") 'evil-forward-char)
+             ;(define-key magit-mode-map (kbd "h") 'evil-backward-char)
+             (add-hook 'git-commit-mode-hook 'evil-insert-state))
 
 (use-package undo-tree
-  :ensure t
-  :diminish undo-tree-mode
-  :config
-  (progn
-    (global-undo-tree-mode)
-    (setq undo-tree-visualizer-timestamps t)
-    (setq undo-tree-visualizer-diff t)))
+             :ensure t
+             :diminish undo-tree-mode
+             :config
+             (progn
+               (global-undo-tree-mode)
+               (setq undo-tree-visualizer-timestamps t)
+               (setq undo-tree-visualizer-diff t)))
 
 (use-package which-key
-  :ensure t
-  :config
-  (which-key-mode))
+             :ensure t
+             :config
+             (which-key-mode))
 
 ;;;;;;;;;;;;;;;
 ;; Languages ;;
@@ -205,69 +211,69 @@
 ;; Global
 ;;
 (use-package mmm-mode
-  :ensure t)
+             :ensure t)
 
 (use-package rainbow-delimiters
-  :ensure t
-  :config
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+             :ensure t
+             :config
+             (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 ;;
 ;; Web (HTML, JS, CSS)
 ;;
 (use-package emmet-mode
-  :ensure t
-  :init
-  (add-hook 'emmet-mode-hook
-	    (lambda ()
-	      (evil-define-key 'insert emmet-mode-keymap (kbd "C-S-l") 'emmet-next-edit-point)
-	      (evil-define-key 'insert emmet-mode-keymap (kbd "C-S-h") 'emmet-prev-edit-point))))
+             :ensure t
+             :init
+             (add-hook 'emmet-mode-hook
+                       (lambda ()
+                         (evil-define-key 'insert emmet-mode-keymap (kbd "C-S-l") 'emmet-next-edit-point)
+                         (evil-define-key 'insert emmet-mode-keymap (kbd "C-S-h") 'emmet-prev-edit-point))))
 
 (use-package markdown-mode
-  :ensure t
-  :config
-  (define-key markdown-mode-map (kbd "C-\\")  'markdown-insert-list-item)
-  (define-key markdown-mode-map (kbd "C-c 1") 'markdown-insert-header-atx-1)
-  (define-key markdown-mode-map (kbd "C-c 2") 'markdown-insert-header-atx-2)
-  (define-key markdown-mode-map (kbd "C-c 3") 'markdown-insert-header-atx-3)
-  (define-key markdown-mode-map (kbd "C-c 4") 'markdown-insert-header-atx-4)
-  (define-key markdown-mode-map (kbd "C-c 5") 'markdown-insert-header-atx-5)
-  (define-key markdown-mode-map (kbd "C-c 6") 'markdown-insert-header-atx-6)
-  (set-fill-column 80)
-  (turn-on-auto-fill)
-  (flyspell-mode))
+             :ensure t
+             :config
+             (define-key markdown-mode-map (kbd "C-\\")  'markdown-insert-list-item)
+             (define-key markdown-mode-map (kbd "C-c 1") 'markdown-insert-header-atx-1)
+             (define-key markdown-mode-map (kbd "C-c 2") 'markdown-insert-header-atx-2)
+             (define-key markdown-mode-map (kbd "C-c 3") 'markdown-insert-header-atx-3)
+             (define-key markdown-mode-map (kbd "C-c 4") 'markdown-insert-header-atx-4)
+             (define-key markdown-mode-map (kbd "C-c 5") 'markdown-insert-header-atx-5)
+             (define-key markdown-mode-map (kbd "C-c 6") 'markdown-insert-header-atx-6)
+             (set-fill-column 80)
+             (turn-on-auto-fill)
+             (flyspell-mode))
 
 (use-package web-mode
-  :ensure t
-  :config
-  (setq web-mode-ac-sources-alist
-	'(("css" . (ac-source-css-property
-		    ac-source-abbrev
-		    ac-source-dictionary
-		    ac-source-words-in-same-mode-buffers))))
-  (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
-  (add-hook 'web-mode-hook
-	    (lambda ()
-	      (setq web-mode-style-padding 2)
-	      (emmet-mode)
-	      (flycheck-add-mode 'html-tidy 'web-mode)
-	      (flycheck-mode))))
+             :ensure t
+             :config
+             (setq web-mode-ac-sources-alist
+                   '(("css" . (ac-source-css-property
+                                ac-source-abbrev
+                                ac-source-dictionary
+                                ac-source-words-in-same-mode-buffers))))
+             (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
+             (add-hook 'web-mode-hook
+                       (lambda ()
+                         (setq web-mode-style-padding 2)
+                         (emmet-mode)
+                         (flycheck-add-mode 'html-tidy 'web-mode)
+                         (flycheck-mode))))
 
 ;;
 ;; Typescript
 ;;
 (use-package tide
-  :ensure t)
+             :ensure t)
 
 ;;
 ;; Python
 ;;
 (use-package python-mode
-  :ensure t
-  :config
-  (add-hook 'python-mode-hook
-	    (lambda ()
-	      (add-to-list 'write-file-functions 'delete-trailing-whitespace))))
+             :ensure t
+             :config
+             (add-hook 'python-mode-hook
+                       (lambda ()
+                         (add-to-list 'write-file-functions 'delete-trailing-whitespace))))
 
 ;;
 ;; Clojure
@@ -278,85 +284,85 @@
 ;; Rust
 ;;
 (use-package rust-mode
-  :ensure t)
+             :ensure t)
 
 (use-package flycheck-rust
-  :ensure t
-  :defer t
-  :init
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+             :ensure t
+             :defer t
+             :init
+             (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 (use-package racer
-  :ensure t
-  :config
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode))
+             :ensure t
+             :config
+             (add-hook 'rust-mode-hook #'racer-mode)
+             (add-hook 'racer-mode-hook #'eldoc-mode))
 
 (use-package rustfmt
-  :ensure t
-  :config
-  (define-key rust-mode-map (kbd "C-c C-f") #'rustfmt-format-buffer))
+             :ensure t
+             :config
+             (define-key rust-mode-map (kbd "C-c C-f") #'rustfmt-format-buffer))
 
 
 (use-package flycheck-package
-  :ensure t
-  :init (with-eval-after-load 'flycheck (flycheck-package-setup)))
+             :ensure t
+             :init (with-eval-after-load 'flycheck (flycheck-package-setup)))
 
 ;;;;;;;;;;;;;;;;;;;
 ;; Other Modules ;;
 ;;;;;;;;;;;;;;;;;;;
 
 (use-package writeroom-mode
-  :ensure t)
+             :ensure t)
 
 ;;;;;;;;;;;;;;;;;
 ;; Other Hooks ;;
 ;;;;;;;;;;;;;;;;;
 (add-hook 'emacs-lisp-mode-hook
-	  (lambda ()
-	    (eldoc-mode)
-	    (highlight-symbol-mode)
-	    (define-key lisp-interaction-mode-map (kbd "<C-return>") 'eval-last-sexp)))
+          (lambda ()
+            (eldoc-mode)
+            (highlight-symbol-mode)
+            (define-key lisp-interaction-mode-map (kbd "<C-return>") 'eval-last-sexp)))
 
 (add-hook 'lisp-interaction-mode-hook
           (lambda ()
             (define-key lisp-interaction-mode-map (kbd "<C-return>") 'eval-last-sexp)))
 
 (add-hook 'javascript-mode-hook
-	  (lambda ()
-	    (set-fill-column 120)
-	    (turn-on-auto-fill)
-	    (setq js-indent-level 2)))
+          (lambda ()
+            (set-fill-column 120)
+            (turn-on-auto-fill)
+            (setq js-indent-level 2)))
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("70b5e506efe625e6a9cf71ddd5dbbf35b960229f32637676647bef873485df09" default)))
- '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
- '(package-selected-packages
-   (quote
-    (wc-mode tide hexo elfeed fancy-battery spaceline rustfmt json-mode python-mode web-mode flycheck-clojure clojure-mode helm-flx company-flx flx helm-projectile evil-smartparens smartparens helm-smex smex marmalade evil-magit magit wgrep-helm swiper ag exec-path-from-shell company helm-gtags evil-org highlight-symbol flycheck projectile evil-visual-mark-mode powerline-evil evil helm)))
- '(tab-stop-list
-   (quote
-    (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))))
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  '(custom-safe-themes
+     (quote
+       ("70b5e506efe625e6a9cf71ddd5dbbf35b960229f32637676647bef873485df09" default)))
+  '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
+  '(package-selected-packages
+     (quote
+       (wc-mode tide hexo elfeed fancy-battery spaceline rustfmt json-mode python-mode web-mode flycheck-clojure clojure-mode helm-flx company-flx flx helm-projectile evil-smartparens smartparens helm-smex smex marmalade evil-magit magit wgrep-helm swiper ag exec-path-from-shell company helm-gtags evil-org highlight-symbol flycheck projectile evil-visual-mark-mode powerline-evil evil helm)))
+  '(tab-stop-list
+     (quote
+       (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))))
 
 
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  )
 
 (require 'init-linum)
 
 ;;(load-theme 'monokai t)
 (use-package moe-theme
-  :ensure t)
+             :ensure t)
 (load-theme 'moe-dark t)
 
 (provide 'init)

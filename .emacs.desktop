@@ -1,0 +1,127 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Tue Jul  4 15:09:25 2017
+;; Desktop file format version 208
+;; Emacs version 25.1.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (22875 59365 114050 0) (desktop . "208") "pabloalonso@Pablos-MacBook-Pro.local" nil nil ((((font-backend mac-ct) (fontsize . 0) (font . "-*-Menlo-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1") (border-width . 0) (internal-border-width . 2) (vertical-scroll-bars . right) (horizontal-scroll-bars) (foreground-color . "#c6c6c6") (background-color . "#303030") (line-spacing) (left-fringe . 8) (right-fringe . 8) (menu-bar-lines . 0) (tool-bar-lines . 0) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 15) (scroll-bar-height . 0) (alpha) (fullscreen) (display-type . color) (background-mode . dark) (cursor-color . "#c6c6c6") (environment) (powerline-cache) (frameset--id . "5BB7-E2AF-293E-883C") (frameset--mini t . t) (modeline . t) (minibuffer . t) (unsplittable) (right-divider-width . 0) (bottom-divider-width . 0) (icon-name) (visibility . t) (display . "Pablos-MacBook-Pro.local") (explicit-name) (tool-bar-position . top) (height . 71) (width . 132) (left . 720) (top . 25)) ((min-height . 4) (min-width . 10) (min-height-ignore . 3) (min-width-ignore . 9) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 56) (min-pixel-width . 70) (min-pixel-height-ignore . 42) (min-pixel-width-ignore . 63) (min-pixel-height-safe . 14) (min-pixel-width-safe . 14)) leaf (pixel-width . 955) (pixel-height . 980) (total-width . 136) (total-height . 70) (normal-height . 1.0) (normal-width . 1.0) (buffer "core.clj" (selected . t) (hscroll . 0) (fringes 8 8 nil) (margins 2) (scroll-bars nil 3 t nil 0 nil) (vscroll . 0) (dedicated) (point . 154) (start . 1))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring '("+" "\\<\n\\>" "\\<\"\\>" "cide" "cider" "BTSync" "org"))
+(setq register-alist '((113) (48 . "    console.log('isValid', isValid)\n")))
+(setq file-name-history '("~/.emacs.d/lisp/init-evil.el" "~/Code/Clojure/brave-and-true/src/brave_and_true/core.clj" "~/Code/Javascript/Playground/ES6.js" "~/Code/Clojure/brave-and-true/project.clj" "~/.emacs.d/init.el"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 208
+  "/Users/pabloalonso/Code/Clojure/brave-and-true/src/brave_and_true/core.clj"
+  "core.clj"
+  'clojure-mode
+  '(linum-mode override-global-mode undo-tree-mode flycheck-mode helm-mode projectile-mode company-mode smartparens-mode which-key-mode rainbow-delimiters-mode cider-mode)
+  154
+  '(145 t)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (155 234 234 234 234 234 234 234 234 234 234 234 234 234 234 234))))
+
+(desktop-create-buffer 208
+  "/Users/pabloalonso/.emacs.d/lisp/init-evil.el"
+  "init-evil.el"
+  'emacs-lisp-mode
+  '(eldoc-mode linum-mode override-global-mode undo-tree-mode flycheck-mode helm-mode projectile-mode company-mode smartparens-mode which-key-mode rainbow-delimiters-mode)
+  900
+  '(900 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . prefer-utf-8-unix) (overwrite-mode))
+  '((mark-ring (895 286 312 607 457 6061 457 607 312 286 286 201 3153 1026 895 900))))
+
+(desktop-create-buffer 208
+  "/System/Library/Frameworks/Kernel.framework/Versions/A/Headers/mach/error.h"
+  "error.h"
+  'c-mode
+  '(abbrev-mode linum-mode override-global-mode undo-tree-mode flycheck-mode helm-mode projectile-mode company-mode smartparens-mode which-key-mode rainbow-delimiters-mode)
+  1903
+  '(995 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  nil
+  "brave_and_true"
+  'dired-mode
+  '(linum-mode override-global-mode undo-tree-mode helm-mode projectile-mode company-mode which-key-mode)
+  283
+  '(283 nil)
+  t
+  '("/Users/pabloalonso/Code/Clojure/brave-and-true/src/brave_and_true/")
+  '((overwrite-mode))
+  '((mark-ring (283))))
+
+(desktop-create-buffer 208
+  nil
+  "src"
+  'dired-mode
+  '(linum-mode override-global-mode undo-tree-mode helm-mode projectile-mode company-mode which-key-mode)
+  271
+  '(271 nil)
+  t
+  '("/Users/pabloalonso/Code/Clojure/brave-and-true/src/")
+  '((overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/Users/pabloalonso/.emacs.d/init.el"
+  "init.el"
+  'emacs-lisp-mode
+  '(eldoc-mode linum-mode override-global-mode undo-tree-mode flycheck-mode helm-mode projectile-mode company-mode smartparens-mode which-key-mode rainbow-delimiters-mode auto-revert-mode)
+  2651
+  '(1198 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (1198 1198 1198 1198 1198 1198 1198 1198 1198 1198 1 1))))
+
+(desktop-create-buffer 208
+  "/Users/pabloalonso/Code/Javascript/Playground/ES6.js"
+  "ES6.js"
+  'js-mode
+  '(linum-mode override-global-mode undo-tree-mode flycheck-mode helm-mode projectile-mode company-mode smartparens-mode which-key-mode rainbow-delimiters-mode)
+  337
+  '(366 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/Users/pabloalonso/.emacs.d/lisp/init-org.el"
+  "init-org.el"
+  'emacs-lisp-mode
+  '(eldoc-mode linum-mode override-global-mode undo-tree-mode flycheck-mode helm-mode projectile-mode company-mode smartparens-mode which-key-mode rainbow-delimiters-mode auto-revert-mode)
+  508
+  '(508 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring (508 508 1 8710 530 530 550))))
+
+(desktop-create-buffer 208
+  nil
+  "*info*"
+  'Info-mode
+  '(linum-mode override-global-mode undo-tree-mode helm-mode projectile-mode company-mode which-key-mode)
+  1032
+  '(1032 nil)
+  t
+  '("/Applications/Emacs.app/Contents/Resources/info/Calc" "Top" nil)
+  '((tab-width . 8) (buffer-file-coding-system . utf-8-unix) (case-fold-search . t))
+  '((mark-ring nil)))
+

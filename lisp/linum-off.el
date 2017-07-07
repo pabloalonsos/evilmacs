@@ -63,8 +63,8 @@
   "* List of modes disabled when global linum mode is on"
   :type '(repeat (sexp :tag "Major mode"))
   :tag " Major modes where linum is disabled: "
-  :group 'linum
-  )
+  :group 'linum)
+
 (defcustom linum-disable-starred-buffers 't
   "* Disable buffers that have stars in them like *Gnu Emacs*"
   :type 'boolean
